@@ -36,7 +36,7 @@ class Pokedex extends React.Component {
 
 				/>
 				<Pokelist
-					pokemon = {this.state.results}
+					pokemon={this.state.results}
 				/>
 			</div>
 		);

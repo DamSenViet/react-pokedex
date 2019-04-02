@@ -31,7 +31,7 @@ class Pokelist extends React.Component {
 					<div className="pokelist-control poke-list-control-next">Next</div>
 				</div>
 			</div>
-			);
+		);
 	}
 }
 
