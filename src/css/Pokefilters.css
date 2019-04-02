@@ -41,24 +41,24 @@
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: space-evenly;
+	justify-content: space-between;
 	position: relative;
 }
 
 .pokefilter-card-type {
 	margin-top: 10px;
-	margin-left: 5px;
-	margin-right: 5px;
 	color: white;
 	padding: 10px;
 	border-radius: 3px;
 	border-width: 5px;
 	border-style: solid;
-	border-color: rgba(148, 158, 168, 0);
+	border-color: rgba(255, 255, 255, 0);
+	width: 16.6%;
+	text-align: center;
 }
 
 .pokefilter-card-type.active {
-	border-color: rgba(148, 158, 168, 1);
+	border-color: rgba(109, 157, 206);
 }
 
 .pokefilter-card-type:hover {

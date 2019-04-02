@@ -1,24 +1,18 @@
 import React from 'react';
-import PokeAPI from './../../api/pokeapi.js';
+import PokeAPI from './../../api/PokeAPI';
 import * as utilities from './../utilities';
-
-function Type(props) {
-	const typeStyle = { backgroundColor: utilities.typeToColorHex[props.type] };
-	return (
-		<div className="pokefilter-card-type" style={typeStyle}>{props.type}</div>
-	);
-}
 
 class PokefilterType extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			types: [],
-			type1: null,
-			type2: null,
+			selectedTypes: new Set(),
 		};
 	}
 
+	// once component is mounted, go fetch types and update them all
+	// using ids from API to be consistent
 	componentDidMount() {
 		PokeAPI.getTypes((types) => {
 			this.setState({ types: types });
@@ -27,12 +21,17 @@ class PokefilterType extends React.Component {
 
 	render() {
 		const typeComponents = [];
-		const types = this.state.types;
+		const types = this.state.types.slice();
+		const selectedTypes = new Set(this.state.selectedTypes);
+
 		types.forEach((type) => {
+			const isActive = selectedTypes.has(type.id);
 			typeComponents.push(
 				<Type
 					key={type.id}
 					type={type.name}
+					isActive={isActive}
+					toggleType={() => this.toggleType(type.id)}
 				/>
 			);
 		});
@@ -46,7 +45,31 @@ class PokefilterType extends React.Component {
 			</div>
 		);
 	}
-	
+
+	toggleType(id) {
+		const selectedTypes = new Set(this.state.selectedTypes);
+		if (selectedTypes.has(id)) selectedTypes.delete(id);
+		else if (selectedTypes.size < 2) selectedTypes.add(id);
+		else return;
+
+		this.setState({
+			selectedTypes: selectedTypes,
+		});
+	}
+}
+
+function Type(props) {
+	const style = { backgroundColor: utilities.typeToColorHex[props.type] };
+	const className = (props.isActive)? "pokefilter-card-type active" : "pokefilter-card-type";
+	return (
+		<div
+			className={className}
+			style={style}
+			onClick={props.toggleType}
+		>
+			{props.type}
+		</div>
+	);
 }
 
 export default PokefilterType;
