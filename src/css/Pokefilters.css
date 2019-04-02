@@ -1,0 +1,66 @@
+
+/* container */
+.pokefilters {
+	width: 600px;
+	margin: 0px auto;
+	margin-top: 50px;
+}
+
+.pokefilters-title,
+.pokefilter-card-title {
+	position: relative;
+	text-transform: uppercase;
+	text-align: center;
+	color: rgb(148, 158, 168);
+	margin-bottom: 30px;
+	font-weight: 2rem;
+	font-weight: 500;
+	letter-spacing: 1.5px;
+}
+
+.pokefilter-card {
+	padding: 40px;
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: 2px 5px 15px rgba(148, 158, 168, 0.3);
+	position: relative;
+	overflow: hidden;
+}
+
+.pokefilter-card-title {
+	text-align: left;
+	letter-spacing: 0px;
+	margin-bottom: 0px;
+}
+
+/* container */
+.pokefilter-card-types {
+	margin-top: 30px;
+	user-select: none;
+	font-weight: 500;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	position: relative;
+}
+
+.pokefilter-card-type {
+	margin-top: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+	color: white;
+	padding: 10px;
+	border-radius: 3px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: rgba(148, 158, 168, 0);
+}
+
+.pokefilter-card-type.active {
+	border-color: rgba(148, 158, 168, 1);
+}
+
+.pokefilter-card-type:hover {
+	cursor: pointer;
+}

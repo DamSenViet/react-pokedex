@@ -86,14 +86,61 @@ body {
 	margin: 100px auto 0px auto;
 }
 
-.filter-types {
+.filters-title {
+	position: relative;
+	text-transform: uppercase;
+	text-align: center;
+	color: rgb(148, 158, 168);
+	margin-bottom: 30px;
+	font-weight: 2rem;
+	font-weight: 500;
+	letter-spacing: 1.5px;
+}
+
+.filter {
 	padding: 40px;
 	background-color: white;
 	border-radius: 5px;
 	box-shadow: 2px 5px 15px rgba(148, 158, 168, 0.3);
+	position: relative;
+	overflow: hidden;
+	color: rgb(148, 158, 168);
+	font-weight: 500;
 }
 
-.pokeball {
-	height: 50px;
-	vertical-align: bottom;
+.filter-title {
+	text-transform: uppercase;
+}
+
+
+.types {
+	margin-top: 30px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+.type {
+	margin-top: 10px;
+	color: white;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.list-controls {
+	margin-top: 30px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	margin-bottom: 30px;
+}
+
+.list-control {
+	background-color: white;
+	box-shadow: 2px 5px 15px rgba(148, 158, 168, 0.3);
+	border-radius: 5px;
+	width: 30%;
+	padding: 40px 0px;
+	text-align: center;
 }
