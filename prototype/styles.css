@@ -1,0 +1,99 @@
+
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700');
+
+body {
+	font-family: "Rubik";
+	font-weight: 400;
+	background-color: rgb(246, 248, 251);
+}
+
+.type-normal {background-color: #A8A77A}
+.type-fire {background-color: rgb(255, 122, 54)}
+.type-water {background-color: rgb(44, 179, 249)}
+.type-electric {background-color: rgb(255, 228, 92)}
+.type-grass {background-color: rgb(22, 182, 115)}
+.type-ice {background-color: #96D9D6}
+.type-fighting {background-color: #C22E28}
+.type-poison {background-color: #A33EA1}
+.type-ground {background-color: #E2BF65}
+.type-flying {background-color: #A98FF3}
+.type-psychic {background-color: #F95587}
+.type-bug {background-color: #A6B91A}
+.type-rock {background-color: #B6A136}
+.type-ghost {background-color: #735797}
+.type-dragon {background-color: #6F35FC}
+.type-dark {background-color: #705746}
+.type-steel {background-color: #B7B7CE}
+.type-fairy {background-color: #D685AD}
+
+.list {
+	width: 600px;
+	margin: 0px auto;
+	margin-top: 50px;
+}
+
+.list-title {
+	position: relative;
+	text-transform: uppercase;
+	text-align: center;
+	color: rgb(148, 158, 168);
+	margin-bottom: 30px;
+	font-weight: 2rem;
+	font-weight: 500;
+	letter-spacing: 1.5px;
+}
+
+.list-card {
+	padding: 40px;
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: 2px 5px 15px rgba(148, 158, 168, 0.3);
+	position: relative;
+	overflow: hidden;
+}
+
+.list-card:hover {
+	cursor: pointer;
+	user-select: none;
+}
+
+.list-card ~ .list-card {
+	margin-top: 30px;
+}
+
+.list-card-name {
+	color: #F7D02C;
+	font-size: 3rem;
+	font-weight: 500;
+}
+
+.list-card-type {
+	color: rgb(148, 158, 168);
+	font-weight: 500;
+	margin-top: 10px;
+}
+
+.list-card-image {
+	position: absolute;
+	top: 50%;
+	right: 0px;
+	transform: translate(10%, -50%);
+	height: 100%;
+}
+
+.filters {
+	width: 600px;
+	margin: 100px auto 0px auto;
+}
+
+.filter-types {
+	padding: 40px;
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: 2px 5px 15px rgba(148, 158, 168, 0.3);
+}
+
+.pokeball {
+	height: 50px;
+	vertical-align: bottom;
+}
