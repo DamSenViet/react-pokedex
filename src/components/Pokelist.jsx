@@ -1,24 +1,22 @@
 import React from 'react';
+import Pokecard from './Pokecard';
 import './../css/Pokelist.css';
-
-function Pokecard(props) {
-	return (
-		<div class="pokecard">
-			<div class="pokecard-name"></div>
-			<div class="pokecard-types">
-			</div>
-			<img
-				class="pokecard-image"
-				src=""
-			/>
-		</div>
-	);
-}
 
 // component for displaying cards
 class Pokelist extends React.Component {
 	render() {
-		let pokecardComponents = [];
+		const pokecardComponents = [];
+		const pokemon = this.props.pokemonToRender;
+		// console.log(pokemon);
+		pokemon.forEach((singlePokemon) => {
+			pokecardComponents.push(
+				<Pokecard
+					key={singlePokemon.id}
+					id={singlePokemon.id}
+				/>
+			);
+		});
+
 		return (
 			<div className="pokelist">
 				<div className="pokelist-title">Choose Your Pokemon</div>

@@ -1,0 +1,37 @@
+
+.pokecard {
+	padding: 40px;
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: 2px 5px 15px rgba(148, 158, 168, 0.3);
+	position: relative;
+	overflow: hidden;
+}
+
+.pokecard-name {
+	text-transform: capitalize;
+	font-size: 3rem;
+	font-weight: 500;
+}
+
+.pokecard-type {
+	display: inline-block;
+	text-transform: uppercase;
+	color: rgb(148, 158, 168);
+	font-weight: 500;
+	margin-top: 10px;
+	margin-right: 5px;
+}
+
+.pokecard ~ .pokecard {
+	margin-top: 30px;
+}
+
+.pokecard-image {
+	position: absolute;
+	top: 50%;
+	right: 30px;
+	transform: translate(10%, -50%);
+	height: 100%;
+}
+
