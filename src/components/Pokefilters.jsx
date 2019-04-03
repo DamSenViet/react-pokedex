@@ -89,6 +89,7 @@ class Pokefilters extends React.Component {
 					});
 				}));
 		});
+
 		// wait for all promises to resolve
 		Promise.all(pokemonNamesWithTypes).then((values) => {
 			// pokemon must belong to all selected types
@@ -97,7 +98,7 @@ class Pokefilters extends React.Component {
 					if (!values[i].includes(singlePokemon.name)) return false;
 				return true;
 			});
-			// console.log(typeFilteredPokemon);
+			// console.log(typeFilteredPokemon)
 			if (callback) callback(typeFilteredPokemon);
 		});
 	}
