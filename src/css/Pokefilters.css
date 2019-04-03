@@ -27,6 +27,10 @@
 	overflow: hidden;
 }
 
+.pokefilter-card ~ .pokefilter-card {
+	margin-top: 30px;
+}
+
 .pokefilter-card-title {
 	text-align: left;
 	letter-spacing: 0px;
@@ -34,18 +38,20 @@
 }
 
 /* container */
-.pokefilter-card-types {
+.pokefilter-card-types,
+.pokefilter-card-generations {
 	margin-top: 30px;
 	user-select: none;
 	font-weight: 500;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	position: relative;
 }
 
-.pokefilter-card-type {
+.pokefilter-card-type,
+.pokefilter-card-generation {
 	margin-top: 10px;
 	color: white;
 	padding: 10px;
@@ -58,10 +64,20 @@
 	transition: all 0.3s ease;
 }
 
-.pokefilter-card-type.active {
+.pokefilter-card-generation {
+	color: rgb(148, 158, 168);
+	text-transform: capitalize;
+	text-align: center;
+	border-color: rgba(148, 158, 168, 1);
+	border-width: 1px;
+}
+
+.pokefilter-card-type.active,
+.pokefilter-card-generation.active {
 	transform: scale(1.15);
 }
 
-.pokefilter-card-type:hover {
+.pokefilter-card-type:hover,
+.pokefilter-card-generation:hover {
 	cursor: pointer;
 }

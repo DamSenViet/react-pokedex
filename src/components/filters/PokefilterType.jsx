@@ -4,13 +4,13 @@ import * as utilities from './../utilities';
 
 
 /**
- * Class representing the filter for pokemon types.
+ * Component that displays and controls the filter for pokemon types.
  */
 class PokefilterType extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			types: [],
+			types: [], // list of valid types {id, name}
 			selectedTypes: new Set(),
 		};
 	}
@@ -29,7 +29,7 @@ class PokefilterType extends React.Component {
 	/**
 	 * Renders type components based on types and selected types.
 	 * @param {Array} types list of types {id, name}
-	 * @param {Set} selectedTypes list of unique of type names
+	 * @param {Set} selectedTypes list of unique of type ids
 	 */
 	renderTypeComponents(types, selectedTypes) {
 		const typeComponents = [];
@@ -38,10 +38,10 @@ class PokefilterType extends React.Component {
 			typeComponents.push(
 				<Type
 					key={type.id}
-					type={type.name}
-					isActive={isActive}
+					name={type.name}
 					toggleType={() => this.toggleType(type.id)}
-				/>
+					isActive={isActive}
+					/>
 			);
 		});
 		return typeComponents;
@@ -66,6 +66,7 @@ class PokefilterType extends React.Component {
 
 	/**
 	 * Toggles type filter to be applied. Up to two types can be selected.
+	 * Deselected upon selection of already selected.
 	 * @param {Number} id pokemon type id
 	 */
 	toggleType(id) {
@@ -77,8 +78,9 @@ class PokefilterType extends React.Component {
 
 		// make the filter container re-retrieve results
 		// after new filter condition has been applied
-		this.setState({ selectedTypes: selectedTypes, },
-			() => this.props.updateFilters());
+		this.setState({ selectedTypes: selectedTypes, }, () => {
+			this.props.updateFilters();
+		});
 	}
 }
 
@@ -88,15 +90,18 @@ class PokefilterType extends React.Component {
  * @param {Object} props
  */
 function Type(props) {
-	const style = { backgroundColor: utilities.typeToColorHex[props.type] };
-	const className = (props.isActive) ? "pokefilter-card-type active" : "pokefilter-card-type";
+	const name = props.name;
+	const style = { backgroundColor: utilities.typeToColorHex[name] };
+	const className = (props.isActive) ?
+		"pokefilter-card-type active" : "pokefilter-card-type";
+	
 	return (
 		<div
 			className={className}
 			style={style}
 			onClick={props.toggleType}
 		>
-			{props.type}
+			{name}
 		</div>
 	);
 }

@@ -1,15 +1,20 @@
 import React from 'react';
 import PokefilterType from './filters/PokefilterType';
+import PokefilterGeneration from './filters/PokefilterGeneration';
 import './../css/Pokefilters.css';
 import PokeAPI from './../api/PokeAPI';
 
-// filter container, handles result fetching based upon all filters
+/**
+ * Component that displays filters, assembles and applies filters to update
+ * results.
+ */
 class Pokefilters extends React.Component {
 	constructor(props) {
 		super(props);
 		this.typeFilter = React.createRef();
+		this.generationFilter = React.createRef();
 		this.state = {
-			pokemon: [],
+			pokemon: [], // base list of pokemon {id, name} to filter against
 		}
 	}
 
@@ -44,6 +49,10 @@ class Pokefilters extends React.Component {
 			<div className="pokefilters">
 				<div className="pokefilters-title">Filters</div>
 				<ul>
+					<PokefilterGeneration
+						ref={this.generationFilter}
+						updateFilters={this.updateFilters.bind(this)}
+					/>
 					<PokefilterType
 						ref={this.typeFilter}
 						updateFilters={this.updateFilters.bind(this)}
@@ -60,29 +69,36 @@ class Pokefilters extends React.Component {
 	 */
 	updateFilters() {
 		const basePokemon = this.state.pokemon.slice();
-		// assembling filters
+		// assemble filter selections
 		const selectedTypes = new Set(this.typeFilter.current.state.selectedTypes);
-		if (selectedTypes.size > 0) {
-			this.updateFiltersWithTypes(selectedTypes, basePokemon, (typeFilteredPokemon) => {
-				this.props.updateResults(typeFilteredPokemon);
+		const selectedGeneration = this.generationFilter.current.state.selectedGeneration;
+
+		// chain filters together, each filter has a do nothing condition
+		this.updateFiltersWithTypes(selectedTypes, basePokemon, (typeFilteredPokemon) => {
+			this.updateFiltersWithGeneration(selectedGeneration, typeFilteredPokemon, (generationFilteredPokemon) => {
+				this.props.updateResults(generationFilteredPokemon); // update results in Pokedex
 			});
-		}
-		// if no filters, use default dex
-		else this.props.updateResults(basePokemon);
+		});
 	}
 
 	/**
 	 * Matches pokemon against selected types. Callback pattern & derived allows
 	 * for filter chaining via nested callbacks.
-	 * @param {Set} selectedTypes 
+	 * @param {Set} selectedTypes set of type names or ids
 	 * @param {Array} derivedPokemon list of pokemon to compare and validate types
 	 * @param {function} callback to be run on list of type filtered pokemon
 	 */
 	updateFiltersWithTypes(selectedTypes, derivedPokemon, callback) {
+		// do nothing condition
+		if (selectedTypes.size === 0) {
+			if (callback) callback(derivedPokemon);
+			return;
+		}
+
 		// create promises to retrieve pokemon names with selected types
-		const pokemonNamesWithTypes = [];
+		const namesWithTypesPromises = [];
 		selectedTypes.forEach((type) => {
-			pokemonNamesWithTypes.push(
+			namesWithTypesPromises.push(
 				new Promise((resolve, reject) => {
 					PokeAPI.getNamesWithType(type, (names) => {
 						resolve(names);
@@ -91,15 +107,48 @@ class Pokefilters extends React.Component {
 		});
 
 		// wait for all promises to resolve
-		Promise.all(pokemonNamesWithTypes).then((values) => {
+		Promise.all(namesWithTypesPromises).then((namesWithTypes) => {
 			// pokemon must belong to all selected types
 			const typeFilteredPokemon = derivedPokemon.filter((singlePokemon) => {
-				for (let i = 0; i < values.length; ++i)
-					if (!values[i].includes(singlePokemon.name)) return false;
+				for (let i = 0; i < namesWithTypes.length; ++i)
+					if (!namesWithTypes[i].includes(singlePokemon.name))
+						return false;
 				return true;
 			});
 			// console.log(typeFilteredPokemon)
 			if (callback) callback(typeFilteredPokemon);
+		});
+	}
+
+
+	/**
+	 * Matches pokemon against selected generation. Callback pattern & derived allows
+	 * for filter chaining via nested callbacks.
+	 * @param {null | Number} selectedGeneration 
+	 * @param {Array} derivedPokemon list of pokemon to compare and validate generations
+	 * @param {function} callback to be run on list of generation filtered pokemon
+	 */
+	updateFiltersWithGeneration(selectedGeneration, derivedPokemon, callback) {
+		// do nothing condition
+		if (selectedGeneration === null) {
+			if (callback) callback(derivedPokemon);
+			return;
+		}
+
+		PokeAPI.getNamesWithGeneration(selectedGeneration, (namesWithGeneration) => {
+			const generationFilteredPokemon = derivedPokemon.filter((singlePokemon => {
+				for (let i = 0; i < namesWithGeneration.length; ++i) {
+					const regex = new RegExp(`^${namesWithGeneration[i]}-`);
+					if (
+						singlePokemon.name === namesWithGeneration[i] ||
+						regex.test(singlePokemon.name)
+					) return true;
+				}
+				return false;
+			}));
+			// console.log(generationFilteredPokemon);
+
+			if (callback) callback(generationFilteredPokemon);
 		});
 	}
 }
