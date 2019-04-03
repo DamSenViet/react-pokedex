@@ -9,7 +9,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Stack
   * [request](https://github.com/request/request) (simplified http requests)
   * [poke-api](https://github.com/PokeAPI/pokeapi) (formatted pokemon data)
-  * [pokemon](https://github.com/sindresorhus/pokemon) (compensate backlogged PokeAPI search)
   <!-- * [anime](https://github.com/juliangarnier/anime/) (animations) -->
 
 ## Available Scripts
@@ -23,4 +22,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
+
+
+## Notes
+
+Please be aware that the api only allows for 100 calls per minute from any IP address (not counting images). If the application is not returning any results, wait a minute and then try again. (Did not implement resource caching yet!!!)
+
+
+## Writeup
 

@@ -52,15 +52,16 @@ class PokefilterType extends React.Component {
 		else if (selectedTypes.size < 2) selectedTypes.add(id);
 		else return;
 
-		this.setState({
-			selectedTypes: selectedTypes,
-		});
+		// make the filter container re-retrieve results
+		// after new filter condition has been applied
+		this.setState({selectedTypes: selectedTypes,},
+			() => this.props.updateFilters());
 	}
 }
 
 function Type(props) {
 	const style = { backgroundColor: utilities.typeToColorHex[props.type] };
-	const className = (props.isActive)? "pokefilter-card-type active" : "pokefilter-card-type";
+	const className = (props.isActive) ? "pokefilter-card-type active" : "pokefilter-card-type";
 	return (
 		<div
 			className={className}

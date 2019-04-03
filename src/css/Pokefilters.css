@@ -55,10 +55,11 @@
 	border-color: rgba(255, 255, 255, 0);
 	width: 16.6%;
 	text-align: center;
+	transition: all 0.3s ease;
 }
 
 .pokefilter-card-type.active {
-	border-color: rgba(109, 157, 206);
+	transform: scale(1.15);
 }
 
 .pokefilter-card-type:hover {

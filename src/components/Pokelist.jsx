@@ -18,12 +18,12 @@ function Pokecard(props) {
 // component for displaying cards
 class Pokelist extends React.Component {
 	render() {
-		let thingy = [];
+		let pokecardComponents = [];
 		return (
 			<div className="pokelist">
 				<div className="pokelist-title">Choose Your Pokemon</div>
 				<ul>
-					{thingy}
+					{pokecardComponents}
 				</ul>
 				<div className="pokelist-controls">
 					<div className="pokelist-control poke-list-control-prev">Prev</div>
