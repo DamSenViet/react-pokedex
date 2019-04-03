@@ -79,7 +79,7 @@ class PokefilterType extends React.Component {
 
 		// make the filter container re-retrieve results
 		// after new filter condition has been applied
-		this.setState({ selectedTypes: selectedTypes, }, () => {
+		this.setState({ selectedTypes: selectedTypes }, () => {
 			this.props.updateFilters();
 		});
 	}
@@ -94,7 +94,9 @@ class PokefilterType extends React.Component {
  */
 function Type(props) {
 	const name = props.name;
-	const style = { backgroundColor: utilities.typeToColorHex[name] };
+	const typeColor = utilities.typeToColorHex[name];
+	const style = (props.isActive) ?
+		{ backgroundColor: typeColor } : { color: typeColor, borderColor: typeColor };
 	const className = (props.isActive) ?
 		"pokefilter-card-type active" : "pokefilter-card-type";
 

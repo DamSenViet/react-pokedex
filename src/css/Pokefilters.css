@@ -54,15 +54,21 @@
 .pokefilter-card-type,
 .pokefilter-card-generation {
 	margin-top: 10px;
-	color: white;
+	/* color to be replaced with type color */
+	color: white; 
 	padding: 10px;
 	border-radius: 3px;
-	border-width: 5px;
+	border-width: 1px;
 	border-style: solid;
+	/* border-color to be replaced with type color */
 	border-color: rgba(255, 255, 255, 0);
 	width: 16.6%;
 	text-align: center;
 	transition: all 0.3s ease;
+}
+
+.pokefilter-card-type {
+	text-transform: uppercase;
 }
 
 .pokefilter-card-generation {
@@ -76,6 +82,11 @@
 .pokefilter-card-type.active,
 .pokefilter-card-generation.active {
 	transform: scale(1.15);
+}
+
+.pokefilter-card-generation.active {
+	background-color: rgb(148, 158, 168);
+	color: white;
 }
 
 .pokefilter-card-type:hover,

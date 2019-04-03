@@ -71,12 +71,12 @@ class PokefilterGeneration extends React.Component {
 	toggleGeneration(id) {
 		const selectedGeneration = this.state.selectedGeneration;
 		if (id !== selectedGeneration)
-			this.setState({ selectedGeneration: id, }, () => {
+			this.setState({ selectedGeneration: id }, () => {
 				this.props.updateFilters();
 				// console.log("new generation selected");
 			});
 		else
-			this.setState({ selectedGeneration: null, }, () => {
+			this.setState({ selectedGeneration: null }, () => {
 				this.props.updateFilters();
 				// console.log("generation disabled");
 			});
