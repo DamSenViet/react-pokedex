@@ -8,16 +8,10 @@ import * as utilities from './utilities';
  * Sub-component of Pokelist.
  */
 class Pokecard extends React.Component {
-
-	/**
-	 * Constructs Pokecard and sets mount flag to true to allow storing of
-	 * pokemon data without memory leak.
-	 * @param {*} props *shrugs*
-	 */
 	constructor(props) {
 		super(props);
 		// isMounted deprecated, _isMounted instead
-		this._isMounted = true;
+		this._isMounted = true; // set mount flag to prevent memory leak
 		this.state = {
 			id: "",
 			name: "",
@@ -26,9 +20,10 @@ class Pokecard extends React.Component {
 		}
 	}
 
+
 	/**
 	 * Upon mounting, retrieves and stores pokemon data in state. Checks mount
-	 * state before updating to ensure memory leaks.
+	 * state before updating to prevent memory leaks.
 	 */
 	componentDidMount() {
 		const id = this.props.id;
@@ -46,7 +41,8 @@ class Pokecard extends React.Component {
 
 
 	/**
-	 * Upon unmounting, sets mount flag to false to prevent state from being set.
+	 * Upon unmounting, sets mount flag to false to prevent state from being set
+	 * and memory from leaking.
 	 */
 	componentWillUnmount() {
 		this._isMounted = false;
@@ -104,6 +100,7 @@ class Pokecard extends React.Component {
 			</div>
 		);
 	}
+
 }
 
 export default Pokecard;

@@ -16,6 +16,7 @@ class Pokedex extends React.Component {
 		}
 	}
 
+
 	render() {
 		const results = this.state.results;
 		const currentPage = this.state.currentPage;
@@ -41,6 +42,7 @@ class Pokedex extends React.Component {
 		);
 	}
 
+
 	/**
 	 * Updates current results with new results (already filtered).
 	 * @param {Array} results list of pokemon {id, name}
@@ -51,6 +53,7 @@ class Pokedex extends React.Component {
 			currentPage: 0,
 		});
 	}
+
 
 	/**
 	 * Calculates the highest possible page number (0 indexed).
@@ -76,6 +79,7 @@ class Pokedex extends React.Component {
 		return false;
 	}
 
+
 	/**
 	 * Decrements the existing page numbeer within valid bounds.
 	 */
@@ -87,18 +91,21 @@ class Pokedex extends React.Component {
 		this.setState({ currentPage: currentPage - 1 });
 	}
 
+
 	/**
 	 * Allows user to jump to a page number within bounds upon prompt.
 	 */
 	jumpPage() {
 		const highestPage = this.getHighestPage();
-		let selectedPage;
-		do {
-			selectedPage = window.prompt(`Select a page between 1 and ${highestPage + 1}`);
-			selectedPage = Number.parseInt(selectedPage) - 1; // convert back to 0 index
-		} while (!this.isValidPage(selectedPage));
-		this.setState({ currentPage: selectedPage });
+
+		let selectedPage = window.prompt(`Select a page between 1 and ${highestPage + 1}.`);
+		selectedPage = Number.parseInt(selectedPage) - 1; // convert back to 0 index
+
+		if (this.isValidPage(selectedPage))
+			this.setState({ currentPage: selectedPage });
+		else window.alert("Invalid page number.");
 	}
+
 
 	/**
 	 * Increments the page number within valid bounds.

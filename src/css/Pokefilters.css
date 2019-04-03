@@ -4,6 +4,7 @@
 	width: 600px;
 	margin: 0px;
 	margin-top: 50px;
+	padding-bottom: 50px;
 }
 
 .pokefilters-title,
@@ -79,5 +80,52 @@
 
 .pokefilter-card-type:hover,
 .pokefilter-card-generation:hover {
+	cursor: pointer;
+}
+
+
+.pokefilter-card-name {
+	margin-top: 30px;
+	outline: none;
+	border: none;
+	background: none;
+
+	padding-bottom: 5px;
+	border-bottom: 1px solid rgb(148, 158, 168);
+	width: 100%;
+
+	color: rgb(148, 158, 168);
+	font-size: 200%;
+	font-weight: 500;
+	letter-spacing: 1.5px;
+	text-transform: capitalize;
+}
+
+.pokefilter-card-clear {
+	position: absolute;
+	bottom: 40px;
+	right: 40px;
+	padding-top: 30px;
+	padding-bottom: 6px;
+	color: rgb(148, 158, 168);
+	font-weight: 400;
+	font-size: 200%;
+	text-align: center;
+
+	transition: all 0.5s ease-in-out;
+	opacity: 0;
+	transform-origin: right bottom;
+	transform: scale(1);
+	pointer-events: none;
+	cursor: default;
+}
+
+.pokefilter-card-clear.active {
+	pointer-events: all;
+	opacity: 1;
+	transform: scale(1.2);
+}
+
+.pokefilter-card-clear:hover {
 	cursor: pointer;
 }

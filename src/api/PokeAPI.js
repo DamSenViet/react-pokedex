@@ -36,6 +36,7 @@ class PokeAPI {
 			});
 	}
 
+
 	/**
 	 * Retrieves all available types (with id and name) in the API's database.
 	 * Response is supposed to be cached in a component.
@@ -66,6 +67,7 @@ class PokeAPI {
 				if (callback) callback(validTypes);
 			});
 	}
+
 
 	/**
 	 * Retrieves all available generations (with id and name) in the API's database.
@@ -104,6 +106,7 @@ class PokeAPI {
 			});
 	}
 
+
 	/**
 	 * Retrieves all names of pokemon that belong to the type group.
 	 * @param {String | Number} type name or id
@@ -121,6 +124,7 @@ class PokeAPI {
 			if (callback) callback(names);
 		});
 	}
+
 
 	/**
 	 * Retrieves all names of pokemon that were released in the generation.

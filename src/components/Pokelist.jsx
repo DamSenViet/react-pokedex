@@ -26,6 +26,7 @@ class Pokelist extends React.Component {
 		return pokecardComponents;
 	}
 
+
 	render() {
 		const currentPage = this.props.currentPage + 1;
 		const highestPage = this.props.highestPage + 1;
@@ -61,6 +62,7 @@ class Pokelist extends React.Component {
 			</div>
 		);
 	}
+
 }
 
 export default Pokelist;

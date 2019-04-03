@@ -15,6 +15,7 @@ class PokefilterType extends React.Component {
 		};
 	}
 
+
 	/**
 	 * Once component is mounted go fetch types to be cached and trigger
 	 * re-render via setState.
@@ -41,7 +42,7 @@ class PokefilterType extends React.Component {
 					name={type.name}
 					toggleType={() => this.toggleType(type.id)}
 					isActive={isActive}
-					/>
+				/>
 			);
 		});
 		return typeComponents;
@@ -82,7 +83,9 @@ class PokefilterType extends React.Component {
 			this.props.updateFilters();
 		});
 	}
+
 }
+
 
 /**
  * Function sub-component for PokefilterType, represents possible types,
@@ -94,7 +97,7 @@ function Type(props) {
 	const style = { backgroundColor: utilities.typeToColorHex[name] };
 	const className = (props.isActive) ?
 		"pokefilter-card-type active" : "pokefilter-card-type";
-	
+
 	return (
 		<div
 			className={className}

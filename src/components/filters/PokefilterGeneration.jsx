@@ -13,6 +13,7 @@ class PokefilterGeneration extends React.Component {
 		}
 	}
 
+
 	/**
 	 * Once component is mounted, go fetch generations to be cached and trigger
 	 * re-render.
@@ -22,6 +23,7 @@ class PokefilterGeneration extends React.Component {
 			this.setState({ generations: generations });
 		});
 	}
+
 
 	/**
 	 * Renders generation components based on generations and selected generation.
@@ -44,6 +46,7 @@ class PokefilterGeneration extends React.Component {
 		return generationComponents;
 	}
 
+
 	render() {
 		const selectedGeneration = this.state.selectedGeneration;
 		const generations = this.state.generations;
@@ -58,6 +61,7 @@ class PokefilterGeneration extends React.Component {
 			</div>
 		);
 	}
+
 
 	/**
 	 * Toggles generation filter to be applied. Only one generation can be
@@ -77,7 +81,9 @@ class PokefilterGeneration extends React.Component {
 				// console.log("generation disabled");
 			});
 	}
+
 }
+
 
 /**
  * Function sub-component for PokefilterGeneration, represents possible

@@ -1,6 +1,7 @@
 import React from 'react';
 import PokefilterType from './filters/PokefilterType';
 import PokefilterGeneration from './filters/PokefilterGeneration';
+import PokefilterName from './filters/PokefilterName';
 import './../css/Pokefilters.css';
 import PokeAPI from './../api/PokeAPI';
 
@@ -13,10 +14,12 @@ class Pokefilters extends React.Component {
 		super(props);
 		this.typeFilter = React.createRef();
 		this.generationFilter = React.createRef();
+		this.nameFilter = React.createRef();
 		this.state = {
 			pokemon: [], // base list of pokemon {id, name} to filter against
 		}
 	}
+
 
 	/**
 	 * Retrieves and stores names and ids of pokemon once mounted. Also calls
@@ -32,6 +35,7 @@ class Pokefilters extends React.Component {
 		});
 	}
 
+
 	/**
 	 * Blocks updates after storing names and ids of pokemon.
 	 */
@@ -43,12 +47,17 @@ class Pokefilters extends React.Component {
 		);
 	}
 
+
 	render() {
 		// console.log("rendered Pokefilter");
 		return (
 			<div className="pokefilters">
 				<div className="pokefilters-title">Filters</div>
 				<ul>
+					<PokefilterName
+						ref={this.nameFilter}
+						updateFilters={this.updateFilters.bind(this)}
+					/>
 					<PokefilterGeneration
 						ref={this.generationFilter}
 						updateFilters={this.updateFilters.bind(this)}
@@ -69,17 +78,22 @@ class Pokefilters extends React.Component {
 	 */
 	updateFilters() {
 		const basePokemon = this.state.pokemon.slice();
+
 		// assemble filter selections
 		const selectedTypes = new Set(this.typeFilter.current.state.selectedTypes);
 		const selectedGeneration = this.generationFilter.current.state.selectedGeneration;
+		const selectedQuery = this.nameFilter.current.state.selectedQuery;
 
 		// chain filters together, each filter has a do nothing condition
-		this.updateFiltersWithTypes(selectedTypes, basePokemon, (typeFilteredPokemon) => {
-			this.updateFiltersWithGeneration(selectedGeneration, typeFilteredPokemon, (generationFilteredPokemon) => {
-				this.props.updateResults(generationFilteredPokemon); // update results in Pokedex
+		this.updateFiltersWithName(selectedQuery, basePokemon, (nameFilteredPokemon) => {
+			this.updateFiltersWithTypes(selectedTypes, nameFilteredPokemon, (typeFilteredPokemon) => {
+				this.updateFiltersWithGeneration(selectedGeneration, typeFilteredPokemon, (generationFilteredPokemon) => {
+					this.props.updateResults(generationFilteredPokemon); // update results in Pokedex
+				});
 			});
 		});
 	}
+
 
 	/**
 	 * Matches pokemon against selected types. Callback pattern & derived allows
@@ -124,7 +138,7 @@ class Pokefilters extends React.Component {
 	/**
 	 * Matches pokemon against selected generation. Callback pattern & derived allows
 	 * for filter chaining via nested callbacks.
-	 * @param {null | Number} selectedGeneration 
+	 * @param {null | Number} selectedGeneration generation of id or null (no generation)
 	 * @param {Array} derivedPokemon list of pokemon to compare and validate generations
 	 * @param {function} callback to be run on list of generation filtered pokemon
 	 */
@@ -151,6 +165,40 @@ class Pokefilters extends React.Component {
 			if (callback) callback(generationFilteredPokemon);
 		});
 	}
+
+
+	/**
+	 * Matches pokemon against selected queried name. Callback pattern & derived allows
+	 * for filter chaining via nested callbacks. Uses smarter substring matching.
+	 * @param {String} selectedQuery query string, usually the name of a pokemon
+	 * @param {Array} derivedPokemon list of pokemon to compare and validate generations
+	 * @param {function} callback to be run on list of generation filtered pokemon
+	 */
+	updateFiltersWithName(selectedQuery, derivedPokemon, callback) {
+		selectedQuery = selectedQuery.trim().toLowerCase();
+		// do nothing condition
+		if (selectedQuery.length === 0) {
+			if (callback) callback(derivedPokemon);
+			return;
+		}
+
+		const regexes = selectedQuery.split(" ").map((word, index) => {
+			if (index === 0) return new RegExp(`^${word}`); // first word must match name
+			return new RegExp(`${word}`); // all other words are substrings
+		});
+
+		const nameFilteredPokemon = derivedPokemon.filter((singlePokemon) => {
+			// name of pokemon must match all query name components
+			for (let i = 0; i < regexes.length; ++i) {
+				if (!regexes[i].test(singlePokemon.name)) return false;
+			}
+			return true;
+		});
+		// console.log(nameFilteredPokemon);
+
+		if (callback) callback(nameFilteredPokemon);
+	}
+
 }
 
 export default Pokefilters;

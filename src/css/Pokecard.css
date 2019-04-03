@@ -8,6 +8,10 @@
 	overflow: hidden;
 }
 
+.pokecard:hover {
+	cursor: pointer;
+}
+
 .pokecard-name {
 	text-transform: capitalize;
 	font-size: 3rem;
