@@ -32,18 +32,21 @@ class Pokefilters extends React.Component {
 			</div>
 		);
 	}
-	
+
 
 	// decide how to retrieve results
 	// retrieve results and update it
 	updateFilters() {
 		// assembling filters
 		const selectedTypes = new Set(this.typeFilter.current.state.selectedTypes);
-		let basePokemon = this.state.pokemon.slice();
-		if (selectedTypes.size > 0)
-			this.updateFiltersWithTypes(selectedTypes, basePokemon);
+		const basePokemon = this.state.pokemon.slice();
+		if (selectedTypes.size > 0) {
+			this.updateFiltersWithTypes(selectedTypes, basePokemon, (typeFilteredPokemon) => {
+				this.props.updateResults(typeFilteredPokemon);
+			});
+		}
 		else
-			this.props.updateResult(basePokemon);
+			this.props.updateResults(basePokemon);
 	}
 
 	// callback patttern allows for filter chaining (e.g. filter(callback with filter))
@@ -70,7 +73,6 @@ class Pokefilters extends React.Component {
 			if (callback) callback(typeFilteredPokemon);
 		});
 	}
-
 }
 
 export default Pokefilters;
