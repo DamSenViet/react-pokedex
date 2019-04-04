@@ -14,6 +14,7 @@ class Pokecard extends React.Component {
 		// isMounted deprecated, _isMounted instead
 		this._isMounted = true; // set mount flag to prevent memory leak
 		this.state = {
+			// dummy variant data
 			data: {
 				id: 0,
 				speciesId: 0,
@@ -60,8 +61,9 @@ class Pokecard extends React.Component {
 
 
 	/**
-	 * Renders type components based on type names.
+	 * Renders type name components based on type names.
 	 * @param {Array} typeNames list of type names
+	 * @return {Array} list of type name components
 	 */
 	renderTypeNameComponents(typeNames) {
 		const typeNameComponents = [];

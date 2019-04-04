@@ -17,14 +17,14 @@ class Pokefilters extends React.Component {
 		this.generationFilter = React.createRef();
 		this.nameFilter = React.createRef();
 		this.state = {
-			pokemon: [], // base list of pokemon {id, name} to filter against
+			pokemon: [], // base list of pokemon variant {id, name} to filter against
 		}
 	}
 
 
 	/**
-	 * Retrieves and stores names and ids of pokemon once mounted. Also calls
-	 * first update to filters to make Pokedex parent re-render.
+	 * Retrieves and stores names and ids of pokemon variants once mounted. Also
+	 * calls first update to filters to make Pokedex parent re-render.
 	 */
 	componentDidMount() {
 		PokeAPI.getNames((pokemon) => {
@@ -38,7 +38,7 @@ class Pokefilters extends React.Component {
 
 
 	/**
-	 * Blocks updates after storing names and ids of pokemon.
+	 * Blocks updates after storing names and ids of pokemon variants.
 	 */
 	shouldComponentUpdate(nextProps, nextState) {
 		// being lazy right now, deep comparison via stringify
@@ -75,7 +75,7 @@ class Pokefilters extends React.Component {
 
 	/**
 	 * Decides how to update the results in Pokdex with active filters. If no
-	 * filters are selected, the base pokemon list will be used as the result instead.
+	 * filters are selected, the base variant list will be used as the result instead.
 	 */
 	updateFilters() {
 		const basePokemon = this.state.pokemon.slice();
@@ -97,10 +97,10 @@ class Pokefilters extends React.Component {
 
 
 	/**
-	 * Matches pokemon against selected types. Callback pattern & derived allows
-	 * for filter chaining via nested callbacks.
+	 * Matches pokemon variant against selected types. Callback pattern & derived
+	 * allows for filter chaining via nested callbacks.
 	 * @param {Set} selectedTypes set of type names or ids
-	 * @param {Array} derivedPokemon list of pokemon to compare and validate types
+	 * @param {Array} derivedPokemon list of variants to compare and validate types
 	 * @param {function} callback to be run on list of type filtered pokemon
 	 */
 	updateFiltersWithTypes(selectedTypes, derivedPokemon, callback) {
@@ -110,7 +110,7 @@ class Pokefilters extends React.Component {
 			return;
 		}
 
-		// create promises to retrieve pokemon names with selected types
+		// create promises to retrieve variant names with selected types
 		const namesWithTypesPromises = [];
 		selectedTypes.forEach((type) => {
 			namesWithTypesPromises.push(
@@ -123,7 +123,7 @@ class Pokefilters extends React.Component {
 
 		// wait for all promises to resolve
 		Promise.all(namesWithTypesPromises).then((namesWithTypes) => {
-			// pokemon must belong to all selected types
+			// variant must belong to all selected types
 			const typeFilteredPokemon = derivedPokemon.filter((singlePokemon) => {
 				for (let i = 0; i < namesWithTypes.length; ++i)
 					if (!namesWithTypes[i].includes(singlePokemon.name))
@@ -137,7 +137,7 @@ class Pokefilters extends React.Component {
 
 
 	/**
-	 * Matches pokemon against selected generation. Callback pattern & derived allows
+	 * Matches variants against selected generation. Callback pattern & derived allows
 	 * for filter chaining via nested callbacks.
 	 * @param {null | Number} selectedGeneration generation of id or null (no generation)
 	 * @param {Array} derivedPokemon list of pokemon to compare and validate generations
@@ -169,7 +169,7 @@ class Pokefilters extends React.Component {
 
 
 	/**
-	 * Matches pokemon against selected queried name. Callback pattern & derived allows
+	 * Matches variant against selected queried name. Callback pattern & derived allows
 	 * for filter chaining via nested callbacks. Uses smarter substring matching.
 	 * @param {String} selectedQuery query string, usually the name of a pokemon
 	 * @param {Array} derivedPokemon list of pokemon to compare and validate generations

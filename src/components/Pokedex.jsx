@@ -21,7 +21,7 @@ class Pokedex extends React.Component {
 	/**
 	 * Creates a Pokewidget to be displayed based on data. If null, returns 
 	 * @param {null | Object} pokewidgetData the data to be passed
-	 * @return {Pokewidget} the Pokewidget
+	 * @return {null | Pokewidget} the Pokewidget, or nothing
 	 */
 	renderPokewidgetComponent(pokewidgetData) {
 		if (pokewidgetData === null) return null;

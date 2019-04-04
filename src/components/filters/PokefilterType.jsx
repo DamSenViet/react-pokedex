@@ -32,6 +32,7 @@ class PokefilterType extends React.Component {
 	 * Renders type components based on types and selected types.
 	 * @param {Array} types list of types {id, name}
 	 * @param {Set} selectedTypes list of unique of type ids
+	 * @return {Array} list of type components
 	 */
 	renderTypeComponents(types, selectedTypes) {
 		const typeComponents = [];

@@ -11,6 +11,7 @@ class Pokewidget extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			// species data
 			data: {
 				flavorText: "",
 				genus: "",
@@ -51,16 +52,26 @@ class Pokewidget extends React.Component {
 	}
 
 	render() {
-		// passed prop data
+		// variant data passed through props
 		const name = this.props.data.name.split("-").join(" ");
 		const abilityName = this.props.data.abilityName;
 		const typeNames = this.props.data.typeNames;
-		const typeNameComponents = this.renderTypeNameComponents(typeNames);
-		const primaryTypeColor = utilities.typeToColorHex[typeNames[0]];
 		const sprite = this.props.data.sprite;
 		const height = this.props.data.height;
 		const weight = this.props.data.weight;
 		const stats = this.props.data.stats;
+
+		// species data from state (will/can be updated)
+		const flavorText = this.state.data.flavorText;
+		const genus = this.state.data.genus;
+
+		// derived data
+		const primaryType = typeNames[0];
+		const primaryTypeColor = utilities.typeToColorHex[primaryType];
+
+		// custom styles
+		const styleColor = { color: primaryTypeColor };
+		const styleBackgroundColor = { backgroundColor: primaryTypeColor };
 
 		const statsStyles = {};
 		Object.keys(stats).forEach((key, index) => {
@@ -70,20 +81,13 @@ class Pokewidget extends React.Component {
 			}
 		});
 
-		// custom colors
-		const styleColorWithType = { color: primaryTypeColor };
-		const styleBackgroundColorWithType = { backgroundColor: primaryTypeColor };
-
-		// data that needs retrieval
-		const flavorText = this.state.data.flavorText;
-		const genus = this.state.data.genus;
-
+		const typeNameComponents = this.renderTypeNameComponents(typeNames);
 
 		return (
 			<div className="pokewidget-container">
 				<div className="pokewidget-overlay"
 					onClick={this.props.closePokewidget}
-					style={styleBackgroundColorWithType}
+					style={styleBackgroundColor}
 				>
 				</div>
 				<div className="pokewidget">
@@ -98,19 +102,19 @@ class Pokewidget extends React.Component {
 					/>
 					<div className="pokewidget-characteristics">
 						<div className="pokewidget-characteristic">
-							<div className="pokewidget-characteristic-name" style={styleColorWithType}>height</div>
+							<div className="pokewidget-characteristic-name" style={styleColor}>height</div>
 							<div className="pokewidget-characteristic-value">{height}</div>
 						</div>
 						<div className="pokewidget-characteristic">
-							<div className="pokewidget-characteristic-name" style={styleColorWithType}>weight</div>
+							<div className="pokewidget-characteristic-name" style={styleColor}>weight</div>
 							<div className="pokewidget-characteristic-value">{weight}</div>
 						</div>
 						<div className="pokewidget-characteristic">
-							<div className="pokewidget-characteristic-name" style={styleColorWithType}>category</div>
+							<div className="pokewidget-characteristic-name" style={styleColor}>category</div>
 							<div className="pokewidget-characteristic-value">{genus}</div>
 						</div>
 						<div className="pokewidget-characteristic">
-							<div className="pokewidget-characteristic-name" style={styleColorWithType}>abilities</div>
+							<div className="pokewidget-characteristic-name" style={styleColor}>abilities</div>
 							<div className="pokewidget-characteristic-value">{abilityName}</div>
 						</div>
 					</div>

@@ -30,6 +30,7 @@ class PokefilterGeneration extends React.Component {
 	 * Renders generation components based on generations and selected generation.
 	 * @param {Array} generations list of generations {id, name}
 	 * @param {Number} selectedGeneration id of selected generation
+	 * @return {Array} list of generation components
 	 */
 	renderGenerationComponents(generations, selectedGeneration) {
 		const generationComponents = [];

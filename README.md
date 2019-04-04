@@ -1,4 +1,4 @@
-# React Pokemon Team Builder
+# React Pokedex
 
 A simple pokedex based on [BrianC's design](https://dribbble.com/shots/2901787-Pokemon-OG).
 

@@ -89,7 +89,7 @@ class PokefilterName extends React.Component {
 
 
 	/**
-	 * Sets the new query every time there's a keypress.
+	 * Refreshes the timer to update filters every time the user types
 	 */
 	onChange(event) {
 		this.setState({ selectedQuery: event.target.value }, () => {
