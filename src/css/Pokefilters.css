@@ -64,7 +64,7 @@
 	border-color: rgba(255, 255, 255, 0);
 	width: 16.6%;
 	text-align: center;
-	/* transition: all 0.3s ease; */
+	transition: all 0.3s ease;
 }
 
 .pokefilter-card-type {
@@ -123,7 +123,7 @@
 	font-size: 200%;
 	text-align: center;
 
-	/* transition: all 0.5s ease-in-out; */
+	transition: all 0.5s ease-in-out;
 	opacity: 0;
 	transform-origin: right bottom;
 	transform: scale(1);

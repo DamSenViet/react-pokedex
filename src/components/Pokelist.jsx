@@ -77,14 +77,4 @@ Pokelist.propTypes = {
 }
 
 
-Pokelist.defaultProps = {
-	pokemonToRender: [],
-	currentPage: 0,
-	highestPage: 0,
-	prevPage: null,
-	jumpPage: null,
-	nextPage: null,
-}
-
-
 export default Pokelist;

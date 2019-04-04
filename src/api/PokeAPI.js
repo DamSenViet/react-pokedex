@@ -162,6 +162,7 @@ class PokeAPI {
 		});
 	}
 
+
 	/**
 	 * Parses pokemon variant data and returns object with relevant information.
 	 * @param {Object} pokemon the response body of getDataWithNameOrId
@@ -205,10 +206,7 @@ class PokeAPI {
 		return data;
 	}
 
-	
-	static getDataFromSpecies() {
-
-	}
 }
+
 
 export default PokeAPI;
