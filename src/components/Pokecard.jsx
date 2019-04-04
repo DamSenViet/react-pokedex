@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import PokeAPI from './../api/PokeAPI';
 import './../css/Pokecard.css';
 import * as utilities from './utilities';
@@ -13,7 +14,7 @@ class Pokecard extends React.Component {
 		// isMounted deprecated, _isMounted instead
 		this._isMounted = true; // set mount flag to prevent memory leak
 		this.state = {
-			id: "",
+			id: 0,
 			name: "",
 			typeNames: [],
 			sprite: "",
@@ -102,5 +103,11 @@ class Pokecard extends React.Component {
 	}
 
 }
+
+
+Pokecard.propTypes = {
+	id: PropTypes.number.isRequired,
+}
+
 
 export default Pokecard;

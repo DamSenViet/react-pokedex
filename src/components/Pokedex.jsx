@@ -93,7 +93,8 @@ class Pokedex extends React.Component {
 
 
 	/**
-	 * Allows user to jump to a page number within bounds upon prompt.
+	 * Allows user to jump to a page number within valid bounds upon prompt. If
+	 * user does not give a valid page number, jumping is canceled.
 	 */
 	jumpPage() {
 		const highestPage = this.getHighestPage();

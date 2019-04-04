@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Component that displays and controls the name filter.
@@ -96,6 +97,11 @@ class PokefilterName extends React.Component {
 		});
 	}
 
+}
+
+
+PokefilterName.propTypes = {
+	updateFilters: PropTypes.func.isRequired,
 }
 
 export default PokefilterName;

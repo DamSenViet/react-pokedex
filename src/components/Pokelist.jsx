@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Pokecard from './Pokecard';
 import './../css/Pokelist.css';
 
@@ -64,5 +65,26 @@ class Pokelist extends React.Component {
 	}
 
 }
+
+
+Pokelist.propTypes = {
+	pokemonToRender: PropTypes.array.isRequired,
+	currentPage: PropTypes.number.isRequired,
+	highestPage: PropTypes.number.isRequired,
+	prevPage: PropTypes.func.isRequired,
+	jumpPage: PropTypes.func.isRequired,
+	nextPage: PropTypes.func.isRequired,
+}
+
+
+Pokelist.defaultProps = {
+	pokemonToRender: [],
+	currentPage: 0,
+	highestPage: 0,
+	prevPage: null,
+	jumpPage: null,
+	nextPage: null,
+}
+
 
 export default Pokelist;

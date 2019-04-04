@@ -28,7 +28,7 @@ class PokeAPI {
 				const pokemon = results.map((result, index) => {
 					// all ids should be based upon the database
 					const idLink = result.url.split("/");
-					const id = idLink[idLink.length - 2];
+					const id = Number.parseInt(idLink[idLink.length - 2]);
 					return { id: id, name: result.name };
 				});
 				// console.log(names);
@@ -51,7 +51,7 @@ class PokeAPI {
 				const results = JSON.parse(body).results;
 				const types = results.map((result, index) => {
 					const typeLink = result.url.split("/");
-					const id = typeLink[typeLink.length - 2];
+					const id = Number.parseInt(typeLink[typeLink.length - 2]);
 					return { id: id, name: result.name };
 				});
 				const validTypes = types.filter((result) => {
@@ -146,7 +146,7 @@ class PokeAPI {
 
 
 	/**
-	 * Retrieves rendering data of a single pokemon
+	 * Retrieves variant data of a single pokemon.
 	 * @param {String | Number} nameOrId name or id of the pokemon
 	 * @param {function} callback to be run on data
 	 */
@@ -155,22 +155,59 @@ class PokeAPI {
 			if (error) console.log(error);
 			// console.log("gotPokemonWithName");
 			const pokemon = JSON.parse(body);
-			// sort types based on slot priority, primary and secondary types
-			pokemon.types.sort((typeAndSlotA, typeAndSlotB) => {
-				if (typeAndSlotA > typeAndSlotB) return 1;
-				else return -1;
-			});
 
-			const data = {
-				id: pokemon.id,
-				name: pokemon.name,
-				typeNames: pokemon.types.map((typeAndSlot) => typeAndSlot.type.name),
-				sprite: pokemon.sprites.front_default,
-			}
+			const data = this.parseDataFromNameOrId(pokemon);
 			// console.log(data);
-
 			if (callback) callback(data);
 		});
+	}
+
+	/**
+	 * Parses pokemon variant data and returns object with relevant information.
+	 * @param {Object} pokemon the response body of getDataWithNameOrId
+	 * @return {Object} the pokemon's parsed and formatted information
+	 */
+	static parseDataFromNameOrId(pokemon) {
+		// arranging and piecing toegether data of pokemon
+		// sort types based on slot priority, primary and secondary types
+		pokemon.types.sort((typeAndSlotA, typeAndSlotB) => {
+			if (typeAndSlotA.slot > typeAndSlotB.slot) return 1;
+			else return -1;
+		});
+		const typeNames = pokemon.types.map((typeAndSlot) => typeAndSlot.type.name);
+
+		// parse species id from link
+		const speciesLink = pokemon.species.url.split("/");
+		const speciesId = Number.parseInt(speciesLink[speciesLink.length - 2]);
+
+		// weight from hectograms to lbs 1 decimal place
+		const decimalPlaces = 1;
+		let weight = pokemon.weight / 10 * 2.20462;
+		weight = Math.round(weight * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
+
+		// pokemon grab slot 1 ability
+		pokemon.abilities.sort((abilityAndSlotA, abilityAndSlotB) => {
+			if (abilityAndSlotA.slot > abilityAndSlotB.slot) return 1;
+			else return -1;
+		});
+		const abilityName = pokemon.abilities[0].ability.name;
+
+		const data = {
+			id: pokemon.id,
+			speciesId: speciesId,
+			name: pokemon.name,
+			abilityName: abilityName,
+			typeNames: typeNames,
+			sprite: pokemon.sprites.front_default,
+			height: pokemon.height,
+			weight: weight,
+		}
+		return data;
+	}
+
+	
+	static getDataFromSpecies() {
+
 	}
 }
 

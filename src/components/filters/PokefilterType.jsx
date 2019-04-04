@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import PokeAPI from './../../api/PokeAPI';
 import * as utilities from './../utilities';
 
@@ -87,6 +88,11 @@ class PokefilterType extends React.Component {
 }
 
 
+PokefilterType.propTypes = {
+	updateFilters: PropTypes.func.isRequired,
+}
+
+
 /**
  * Function sub-component for PokefilterType, represents possible types,
  * selected/active state.
@@ -110,5 +116,13 @@ function Type(props) {
 		</div>
 	);
 }
+
+
+Type.propTypes = {
+	name: PropTypes.string.isRequired,
+	toggleType: PropTypes.func.isRequired,
+	isActive: PropTypes.bool.isRequired,
+}
+
 
 export default PokefilterType;

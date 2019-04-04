@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import PokeAPI from './../../api/PokeAPI';
 
 /**
@@ -85,6 +86,11 @@ class PokefilterGeneration extends React.Component {
 }
 
 
+PokefilterGeneration.propTypes = {
+	updateFilters: PropTypes.func.isRequired,
+}
+
+
 /**
  * Function sub-component for PokefilterGeneration, represents possible
  * generations, selected/active state.
@@ -104,5 +110,12 @@ function Generation(props) {
 		</div>
 	);
 }
+
+Generation.propTypes = {
+	name: PropTypes.string.isRequired,
+	toggleGeneration: PropTypes.func.isRequired,
+	isActive: PropTypes.bool.isRequired,
+}
+
 
 export default PokefilterGeneration;

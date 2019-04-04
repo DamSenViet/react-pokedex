@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import PokefilterType from './filters/PokefilterType';
 import PokefilterGeneration from './filters/PokefilterGeneration';
 import PokefilterName from './filters/PokefilterName';
@@ -199,6 +200,10 @@ class Pokefilters extends React.Component {
 		if (callback) callback(nameFilteredPokemon);
 	}
 
+}
+
+Pokefilters.propTypes = {
+	updateResults: PropTypes.func.isRequired,
 }
 
 export default Pokefilters;
