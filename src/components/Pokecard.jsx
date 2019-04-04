@@ -118,7 +118,9 @@ class Pokecard extends React.Component {
 	 * Opens the Pokewidget by passing the variant data.
 	 */
 	moreDetails() {
-		this.props.openPokewidget(this.state.data);
+		// block if component hasn't retrieved data from mounting
+		if (this.state.data.name.length !== 0)
+			this.props.openPokewidget(this.state.data);
 	}
 
 }

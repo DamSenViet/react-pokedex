@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PokeAPI from './../../api/PokeAPI';
 
 /**
- * Component that dispalys and controls the filter for pokemon regions.
+ * Component that displays and controls the filter for pokemon regions.
  */
 class PokefilterGeneration extends React.Component {
 	constructor(props) {
