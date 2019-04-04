@@ -132,6 +132,7 @@ class PokeAPI {
 	 * @param {function} callback to run with names of pokemon
 	 */
 	static getNamesWithGeneration(generation, callback) {
+		// console.log("gotNamesWithGeneration");
 		request.get(`${this.baseUrl}/generation/${generation}`, (error, response, body) => {
 			const pokemonSpecies = JSON.parse(body).pokemon_species;
 			const names = pokemonSpecies.map((singlePokemonSpecies) => {
@@ -147,15 +148,15 @@ class PokeAPI {
 
 	/**
 	 * Retrieves variant data of a single pokemon.
-	 * @param {String | Number} nameOrId name or id of the pokemon
+	 * @param {String | Number} nameOrId name or id of the variant
 	 * @param {function} callback to be run on data
 	 */
 	static getDataWithNameOrId(nameOrId, callback) {
+		// console.log("gotDataWithNameOrId");
 		request.get(`${this.baseUrl}/pokemon/${nameOrId}`, (error, response, body) => {
-			if (error) console.log(error);
 			// console.log("gotPokemonWithName");
 			const pokemon = JSON.parse(body);
-
+			// console.log(pokemon);
 			const data = this.parseDataFromNameOrId(pokemon);
 			// console.log(data);
 			if (callback) callback(data);
@@ -181,8 +182,16 @@ class PokeAPI {
 		const speciesLink = pokemon.species.url.split("/");
 		const speciesId = Number.parseInt(speciesLink[speciesLink.length - 2]);
 
-		// weight from hectograms to lbs 1 decimal place
 		const decimalPlaces = 1;
+		// height from decimeters to feet
+		let height = pokemon.height / 10 * 3.28084;
+		height = Math.round(height * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
+		let heightFeet = Math.floor(height);
+		let heightInches = Math.floor((height - heightFeet) / 0.0833333);
+		heightInches = heightInches.toString();
+		heightInches = "0".repeat(2 - heightInches.length) + heightInches; // pad 0s
+
+		// weight from hectograms to lbs rounded to 1 decimal place
 		let weight = pokemon.weight / 10 * 2.20462;
 		weight = Math.round(weight * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
 
@@ -193,6 +202,16 @@ class PokeAPI {
 		});
 		const abilityName = pokemon.abilities[0].ability.name;
 
+		// grab stats
+		const stats = {
+			speed: pokemon.stats[0].base_stat,
+			specialDefense: pokemon.stats[1].base_stat,
+			specialAttack: pokemon.stats[2].base_stat,
+			defense: pokemon.stats[3].base_stat,
+			attack: pokemon.stats[4].base_stat,
+			hp: pokemon.stats[5].base_stat,
+		}
+
 		const data = {
 			id: pokemon.id,
 			speciesId: speciesId,
@@ -200,8 +219,53 @@ class PokeAPI {
 			abilityName: abilityName,
 			typeNames: typeNames,
 			sprite: pokemon.sprites.front_default,
-			height: pokemon.height,
-			weight: weight,
+			height: `${heightFeet}'${heightInches}"`,
+			weight: `${weight}lbs`,
+			stats: stats,
+		}
+		return data;
+	}
+
+
+	/**
+	 * Retrieves specie data of a single pokemon.
+	 * @param {String | Number} species name or id of the species
+	 * @param {function} callback to be run on data
+	 */
+	static getDataWithSpecies(species, callback) {
+		// console.log("gotDataWithSpecies");
+		request.get(`${this.baseUrl}/pokemon-species/${species}`, (error, response, body) => {
+			// mass noun instead of plural
+			const specie = JSON.parse(body);
+			// console.log(specie);
+			const data = this.parseDataFromSpecies(specie);
+			// console.log(data);
+			if (callback) callback(data);
+		});
+	}
+
+
+	/**
+	 * Parses species data and returns object with relevant information.
+	 * @param {Object} specie the response body of getDataWithSpecies
+	 * @return {Object} the pokemon's parsed and formatted information
+	 */
+	static parseDataFromSpecies(specie) {
+		const englishFlavorTexts = specie.flavor_text_entries.filter((entry) => {
+			if (entry.language.name !== "en") return false;
+			return true;
+		});
+		const flavorText = englishFlavorTexts[0].flavor_text;
+
+		const englishGenera = specie.genera.filter((genus) => {
+			if (genus.language.name !== "en") return false;
+			return true;
+		});
+		const genus = englishGenera[0].genus.split(" ")[0];
+
+		const data = {
+			flavorText: flavorText,
+			genus: genus,
 		}
 		return data;
 	}

@@ -1,5 +1,6 @@
 import React from 'react';
 import Pokelist from './Pokelist';
+import Pokewidget from './Pokewidget';
 import Pokefilters from './Pokefilters';
 import './../css/Pokedex.css';
 
@@ -13,9 +14,25 @@ class Pokedex extends React.Component {
 		this.state = {
 			results: [], // filtered list of results to page through
 			currentPage: 0, // 0 indexed, 10 results per page
+			pokewidgetData: null,
 		}
 	}
 
+	/**
+	 * Creates a Pokewidget to be displayed based on data. If null, returns 
+	 * @param {null | Object} pokewidgetData the data to be passed
+	 * @return {Pokewidget} the Pokewidget
+	 */
+	renderPokewidgetComponent(pokewidgetData) {
+		if (pokewidgetData === null) return null;
+		return (
+			<Pokewidget
+				key={pokewidgetData.id}
+				data={pokewidgetData}
+				closePokewidget={this.closePokewidget.bind(this)}
+			/>
+		);
+	}
 
 	render() {
 		const results = this.state.results;
@@ -23,6 +40,8 @@ class Pokedex extends React.Component {
 		const start = currentPage * 10;
 		const end = start + 10;
 		const pokemonToRender = results.slice(start, end);
+		const pokewidgetData = this.state.pokewidgetData;
+		const pokewidgetComponent = this.renderPokewidgetComponent(pokewidgetData);
 
 		return (
 			<div className="pokedex">
@@ -37,7 +56,10 @@ class Pokedex extends React.Component {
 					prevPage={this.prevPage.bind(this)}
 					jumpPage={this.jumpPage.bind(this)}
 					nextPage={this.nextPage.bind(this)}
+					openPokewidget={this.openPokewidget.bind(this)}
 				/>
+
+				{pokewidgetComponent}
 			</div>
 		);
 	}
@@ -117,6 +139,23 @@ class Pokedex extends React.Component {
 		// do calculations to determine if current page exceeds results
 		if (currentPage < highestPage)
 			this.setState({ currentPage: currentPage + 1 });
+	}
+
+
+	/**
+	 * Sets data for Pokewidget. Allows  Pokewidget to render with data.
+	 * @param {*} pokewidgetData 
+	 */
+	openPokewidget(pokewidgetData) {
+		this.setState({ pokewidgetData: pokewidgetData });
+	}
+
+
+	/**
+	 * Clears data for Pokewidget. Prevents Pokewidget from rendering.
+	 */
+	closePokewidget() {
+		this.setState({ pokewidgetData: null });
 	}
 
 }

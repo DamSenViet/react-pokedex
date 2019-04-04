@@ -5,8 +5,13 @@
 	left: 0;
 	height: 100%;
 	width: 100%;
-	background-color: red;
-	opacity: 0.9;
+	/* to be changed with type color */
+	background-color: black;
+	opacity: 0.95;
+}
+
+.pokewidget-overlay:hover {
+	cursor: pointer;
 }
 
 .pokewidget {
@@ -16,7 +21,7 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	padding: 40px;
+	padding: 40px 50px;
 	width: 650px;
 	box-shadow: 2px 5px 15px rgba(50, 50, 50, 0.5);
 }
@@ -33,18 +38,19 @@
 	font-weight: 500;
 	margin-top: 10px;
 	margin-right: 5px;
+	color: rgb(148, 158, 168);
 }
 
 .pokewidget-image {
 	position: absolute;
 	top: 0;
 	right: 0;
-	height: 300px;
-	transform: translate(10%, -50%);
+	height: 250px;
+	transform: translate(0%, -35%);
 }
 
 .pokewidget-characteristics {
-	margin-top: 30px;
+	margin-top: 40px;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
@@ -58,7 +64,8 @@
 }
 
 .pokewidget-characteristic-name {
-	color: red;
+	/* to be changed with type color */
+	color: black;
 	font-size: 1rem;
 	font-weight: 500;
 }
@@ -68,7 +75,7 @@
 	color: rgb(88, 88, 88);
 	font-size: 1.6rem;
 	font-weight: 500;
-	letter-spacing: 1.5px;
+	letter-spacing: 1px;
 }
 
 .pokewidget-description {
@@ -80,30 +87,36 @@
 }
 
 .pokewidget-stat-container {
-	margin-top: 40px;
-	height: 125px;
+	margin-top: 10px;
+}
+
+.pokewidget-stat-values,
+.pokewidget-stat-names {
+	position: relative;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
 	justify-content: space-between;
 }
 
-.pokewidget-stat {
+.pokewidget-stat-values {
+	height: 170px;
+	align-items: flex-end;
+}
+
+
+.pokewidget-stat-value,
+.pokewidget-stat-name {
 	width: 10%;
-	height: 100%;
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	align-content: flex-end;
-	justify-content: flex-end;
 }
 
 .pokewidget-stat-value {
-	width: 100%;
-	height: 100%;
+	width: 10%;
+	height: 0%;
 	border-radius: 5px;
-	background-color: red;
+	/* to be changed with type color */
+	background-color: black;
+	transition: height 1s ease;
 }
 
 .pokewidget-stat-name {

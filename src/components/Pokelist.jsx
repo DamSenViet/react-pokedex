@@ -14,13 +14,14 @@ class Pokelist extends React.Component {
 	 * @param {Array} pokemon list of pokemon {id, name}
 	 * @return {Array} list of Pokecard components
 	 */
-	renderPokecards(pokemon) {
+	renderPokecardsComponents(pokemon) {
 		const pokecardComponents = [];
 		pokemon.forEach((singlePokemon) => {
 			pokecardComponents.push(
 				<Pokecard
 					key={singlePokemon.id}
 					id={singlePokemon.id}
+					openPokewidget={this.props.openPokewidget}
 				/>
 			);
 		});
@@ -32,7 +33,7 @@ class Pokelist extends React.Component {
 		const currentPage = this.props.currentPage + 1;
 		const highestPage = this.props.highestPage + 1;
 		const pokemonToRender = this.props.pokemonToRender;
-		const pokecardComponents = this.renderPokecards(pokemonToRender);
+		const pokecardComponents = this.renderPokecardsComponents(pokemonToRender);
 
 		return (
 			<div className="pokelist">
@@ -74,6 +75,7 @@ Pokelist.propTypes = {
 	prevPage: PropTypes.func.isRequired,
 	jumpPage: PropTypes.func.isRequired,
 	nextPage: PropTypes.func.isRequired,
+	openPokewidget: PropTypes.func.isRequired,
 }
 
 

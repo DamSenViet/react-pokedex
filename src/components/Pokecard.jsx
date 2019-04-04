@@ -14,16 +14,30 @@ class Pokecard extends React.Component {
 		// isMounted deprecated, _isMounted instead
 		this._isMounted = true; // set mount flag to prevent memory leak
 		this.state = {
-			id: 0,
-			name: "",
-			typeNames: [],
-			sprite: "",
+			data: {
+				id: 0,
+				speciesId: 0,
+				name: "",
+				abilityName: "",
+				typeNames: [],
+				sprite: "",
+				height: "",
+				weight: "",
+				stats: {
+					hp: 0,
+					attack: 0,
+					defense: 0,
+					specialAttack: 0,
+					specialDefense: 0,
+					speed: 0,
+				}
+			},
 		}
 	}
 
 
 	/**
-	 * Upon mounting, retrieves and stores pokemon data in state. Checks mount
+	 * Upon mounting, retrieves and stores variant data in state. Checks mount
 	 * state before updating to prevent memory leaks.
 	 */
 	componentDidMount() {
@@ -31,12 +45,7 @@ class Pokecard extends React.Component {
 		PokeAPI.getDataWithNameOrId(id, (data) => {
 			// update to Promise later
 			if (this._isMounted)
-				this.setState({
-					id: data.id,
-					name: data.name,
-					typeNames: data.typeNames,
-					sprite: data.sprite,
-				});
+				this.setState({ data: data });
 		});
 	}
 
@@ -72,9 +81,9 @@ class Pokecard extends React.Component {
 
 	render() {
 		// all pokemon names are one word, dashes indicate variant form
-		const name = this.state.name.split("-").join(" ");
-		const sprite = this.state.sprite;
-		const typeNames = this.state.typeNames;
+		const name = this.state.data.name.split("-").join(" ");
+		const sprite = this.state.data.sprite;
+		const typeNames = this.state.data.typeNames;
 		const typeNameComponents = this.renderTypeNameComponents(typeNames);
 
 		// set color based on primary typing
@@ -83,7 +92,10 @@ class Pokecard extends React.Component {
 		}
 
 		return (
-			<div className="pokecard">
+			<div
+				className="pokecard"
+				onClick={() => this.moreDetails()}
+			>
 				<div
 					className="pokecard-name"
 					style={pokecardNameStyle}
@@ -102,11 +114,19 @@ class Pokecard extends React.Component {
 		);
 	}
 
+	/**
+	 * Opens the Pokewidget by passing the variant data.
+	 */
+	moreDetails() {
+		this.props.openPokewidget(this.state.data);
+	}
+
 }
 
 
 Pokecard.propTypes = {
 	id: PropTypes.number.isRequired,
+	openPokewidget: PropTypes.func.isRequired,
 }
 
 
