@@ -150,23 +150,31 @@ class Pokefilters extends React.Component {
 			return;
 		}
 
+		// note that this is species name being retrieved, not variant names
 		PokeAPI.getNamesWithGeneration(selectedGeneration, (namesWithGeneration) => {
-			const generationFilteredPokemon = derivedPokemon.filter((singlePokemon => {
-				for (let i = 0; i < namesWithGeneration.length; ++i) {
-					const regex = new RegExp(`^${namesWithGeneration[i]}-`);
-					if (
-						singlePokemon.name === namesWithGeneration[i] ||
-						regex.test(singlePokemon.name)
-					) return true;
-				}
-				return false;
+			// flattening dervied into string for word replacement
+			let replacedNamesWithGeneration = JSON.stringify(derivedPokemon.map((pokemon) => {
+				return pokemon.name;
 			}));
+			namesWithGeneration.forEach((specieName) => {
+				// replace names with the value true instead, loop over once more to filter
+				// /"specieName(-[\w|-]*)?"/g (this is the original raw regexp,
+				// not str delimited)
+				const regex = new RegExp(`"${specieName}(-[\\w|-]*)?"`, "g");
+				replacedNamesWithGeneration = replacedNamesWithGeneration
+					.replace(regex, "true");
+			});
+			// all pokemon that belong to the generation now have true at their index instead
+			replacedNamesWithGeneration = JSON.parse(replacedNamesWithGeneration);
+			// console.log(strDerivedPokemon);
+			const generationFilteredPokemon = derivedPokemon.filter((pokemon, index) => {
+				return replacedNamesWithGeneration[index] === true;
+			});
 			// console.log(generationFilteredPokemon);
 
 			if (callback) callback(generationFilteredPokemon);
 		});
 	}
-
 
 	/**
 	 * Matches variant against selected queried name. Callback pattern & derived allows

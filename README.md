@@ -34,9 +34,6 @@ You will also see any lint errors in the console.
 ## Backlog
 
 * Resource Caching (or at least better ways of structuring it)
-* Faster Generation/Region filtering
-  * flatten array of variant names and match regular expressions against that for O(n) speed instead of O(n^2)
-
 
 ## Important Notes
 
