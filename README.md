@@ -4,6 +4,10 @@ A simple pokedex based on [BrianC's design](https://dribbble.com/shots/2901787-P
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+<p>
+  <img src="./screenshots/initial.png" height="300" />
+</p>
+
 ## Table of Contents
 
 * [Stack](#stack)
