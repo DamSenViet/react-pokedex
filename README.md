@@ -1,12 +1,17 @@
 # React Pokedex
 
-A simple pokedex based on [BrianC's design](https://dribbble.com/shots/2901787-Pokemon-OG).
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-<p>
-  <img src="./screenshots/initial.png" height="300" />
-</p>
+<div align="center">
+    <a href="https://damsenviet.github.io/react-pokedex/">
+        <img height="200" src="./screenshots/initial.png" />
+    </a>
+    <br>
+    <br>
+    <p align="center">
+        <a href="https://damsenviet.github.io/react-pokedex/"><b>Official Website</b></a>
+    </p>
+    <p align="center">A simple pokedex based on <a href="https://dribbble.com/shots/2901787-Pokemon-OG">BrianC's design</a></p>
+    <p align="center">This project was bootstrapped with <a href="https://github.com/facebook/create-react-app">Create React App</a></p>
+</div>
 
 ## Table of Contents
 
